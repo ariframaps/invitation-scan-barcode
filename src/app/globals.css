@@ -123,8 +123,8 @@
 
 @media print {
   @page {
-    size: 105mm 148mm;
-    /* margin: 15mm; */
+    size: A6;
+    margin: 0;
   }
   body * {
     visibility: hidden;
