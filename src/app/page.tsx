@@ -47,29 +47,35 @@ export default function Home() {
     inputRef.current?.focus();
   }, []);
 
+  let scanTimer: ReturnType<typeof setTimeout>;
+
   const handleScan = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scannedId = e.target.value.trim();
-    alert(scannedId);
-    const user = users.find((u) => u.id === scannedId);
 
-    // if (user) {
-    //   const newCheckIn: CheckIn = {
-    //     id: user.id,
-    //     name: user.name,
-    //     company: user.company,
-    //     seatNumber: user.seatNumber,
-    //     time: new Date().toLocaleTimeString(),
-    //   };
+    clearTimeout(scanTimer); // reset timer setiap karakter masuk
 
-    //   const alreadyChecked = checkIns.find((c) => c.id === user.id);
-    //   if (!alreadyChecked) {
-    //     setCheckIns((prev) => [...prev, newCheckIn]);
-    //   }
-    // } else {
-    //   alert("User tidak ditemukan!");
-    // }
+    scanTimer = setTimeout(() => {
+      const user = users.find((u) => u.id === scannedId);
 
-    e.target.value = "";
+      if (user) {
+        const newCheckIn: CheckIn = {
+          id: user.id,
+          name: user.name,
+          company: user.company,
+          seatNumber: user.seatNumber,
+          time: new Date().toLocaleTimeString(),
+        };
+
+        const alreadyChecked = checkIns.find((c) => c.id === user.id);
+        if (!alreadyChecked) {
+          setCheckIns((prev) => [...prev, newCheckIn]);
+        }
+      } else {
+        alert("User tidak ditemukan!");
+      }
+
+      e.target.value = ""; // kosongkan input setelah proses
+    }, 1500); // delay 300ms setelah input terakhir
   };
 
   const handlePrint = (ticket: CheckIn) => {
