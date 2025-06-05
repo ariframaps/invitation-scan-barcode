@@ -3,27 +3,44 @@
 import { useEffect, useRef, useState } from "react";
 
 type User = {
-  id: string;
+  id: string; // isi barcode
   name: string;
+  company: string;
+  seatNumber: string;
 };
 
 type CheckIn = {
   id: string;
   name: string;
+  company: string;
+  seatNumber: string;
   time: string;
 };
+
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
+  const [selectedTicket, setSelectedTicket] = useState<CheckIn | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Simulasi data user
     const dummyUsers: User[] = [
-      { id: "123ABC", name: "John Doe" },
-      { id: "456DEF", name: "Jane Smith" },
-      { id: "789GHI", name: "Alice Johnson" },
+      { id: "123ABC", name: "John Doe", company: "TechCorp", seatNumber: "A1" },
+      {
+        id: "456DEF",
+        name: "Jane Smith",
+        company: "CodeInc",
+        seatNumber: "B2",
+      },
+      {
+        id: "789GHI",
+        name: "Alice Johnson",
+        company: "DevHouse",
+        seatNumber: "C3",
+      },
     ];
+
     setUsers(dummyUsers);
 
     // Fokuskan ke input saat halaman dibuka
@@ -38,10 +55,11 @@ export default function Home() {
       const newCheckIn: CheckIn = {
         id: user.id,
         name: user.name,
+        company: user.company,
+        seatNumber: user.seatNumber,
         time: new Date().toLocaleTimeString(),
       };
 
-      // Cegah double scan
       const alreadyChecked = checkIns.find((c) => c.id === user.id);
       if (!alreadyChecked) {
         setCheckIns((prev) => [...prev, newCheckIn]);
@@ -53,12 +71,22 @@ export default function Home() {
     e.target.value = "";
   };
 
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Scan Barcode</h1>
+  const handlePrint = (ticket: CheckIn) => {
+    setSelectedTicket(ticket);
+    setTimeout(() => {
+      window.print();
+      // Fokuskan input supaya bisa scan lagi
+      inputRef.current?.focus();
+      // Reset selectedTicket supaya tombol print hilang kalau mau
+      setSelectedTicket(null);
+    }, 100);
+  };
 
-        {/* Hidden input for scanner */}
+  return (
+    <div className="flex flex-col items-center justify-start min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="p-4 w-full max-w-md">
+        <h1 className="text-xl font-bold mb-4 text-center">Scan Barcode</h1>
+
         <input
           ref={inputRef}
           type="text"
@@ -67,18 +95,73 @@ export default function Home() {
           autoFocus
         />
 
-        {/* Check-in List */}
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Check-in List:</h2>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {checkIns.map((c, i) => (
-              <li key={i} className="border p-2 rounded bg-green-100">
-                <strong>{c.name}</strong> - <span>{c.time}</span>
+              <li key={i} className="p-3 border rounded bg-green-100">
+                <div>
+                  <div>
+                    <strong>{c.name}</strong>
+                  </div>
+                  <div>Perusahaan: {c.company}</div>
+                  <div>Kursi: {c.seatNumber}</div>
+                  <div>Waktu: {c.time}</div>
+                </div>
+                <button
+                  onClick={() => handlePrint(c)}
+                  className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                  Print Tiket
+                </button>
               </li>
             ))}
           </ul>
         </div>
       </div>
+
+      {/* Tiket yang hanya muncul saat print */}
+      {selectedTicket && (
+        <div
+          id="ticket"
+          className="hidden print:block p-6 border w-72 fixed top-10 left-1/2 -translate-x-1/2 bg-white"
+          style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)" }}>
+          <h2 className="text-xl font-bold mb-4">Tiket Masuk</h2>
+          <p>
+            <strong>Nama:</strong> {selectedTicket.name}
+          </p>
+          <p>
+            <strong>Perusahaan:</strong> {selectedTicket.company}
+          </p>
+          <p>
+            <strong>Kursi:</strong> {selectedTicket.seatNumber}
+          </p>
+          <p>
+            <strong>Waktu Check-in:</strong> {selectedTicket.time}
+          </p>
+        </div>
+      )}
+
+      <style>{`
+        @media print {
+          @page {
+            size: A6; /* ukuran tiket kecil, sesuaikan */
+            margin: 10mm;
+          }
+          body * {
+            visibility: hidden;
+          }
+          #ticket, #ticket * {
+            visibility: visible;
+          }
+          #ticket {
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            margin: 0 auto;
+            width: 300px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
