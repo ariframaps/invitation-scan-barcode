@@ -123,8 +123,8 @@
 
 @media print {
   @page {
-    size: A6;
-    margin: 15mm;
+    size: 105mm 148mm;
+    /* margin: 15mm; */
   }
   body * {
     visibility: hidden;
@@ -138,7 +138,7 @@
     width: 320px;
     padding: 20px;
     border: 2px solid #333333;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); */
     background: white;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: #222;
@@ -147,9 +147,9 @@
   #ticket h2 {
     font-size: 24px;
     margin-bottom: 10px;
-    border-bottom: 2px solid #007acc;
+    border-bottom: 2px solid #000000;
     padding-bottom: 6px;
-    color: #007acc;
+    color: #000000;
   }
   #ticket p {
     font-size: 16px;

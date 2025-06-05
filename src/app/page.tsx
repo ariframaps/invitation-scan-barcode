@@ -153,12 +153,13 @@ export default function Home() {
         <div
           id="ticket"
           className="hidden print:block p-6 border w-72 fixed top-10 left-1/2 -translate-x-1/2 bg-white"
-          style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)" }}>
-          <img
+          // style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)" }}
+        >
+          {/* <img
             src="/MKO.png"
             alt="Logo"
             style={{ width: "80px", marginBottom: "10px" }}
-          />
+          /> */}
 
           <h2 className="text-xl font-bold mb-4">Ticket</h2>
           <p>
