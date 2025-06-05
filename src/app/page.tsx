@@ -49,24 +49,25 @@ export default function Home() {
 
   const handleScan = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scannedId = e.target.value.trim();
+    alert(scannedId);
     const user = users.find((u) => u.id === scannedId);
 
-    if (user) {
-      const newCheckIn: CheckIn = {
-        id: user.id,
-        name: user.name,
-        company: user.company,
-        seatNumber: user.seatNumber,
-        time: new Date().toLocaleTimeString(),
-      };
+    // if (user) {
+    //   const newCheckIn: CheckIn = {
+    //     id: user.id,
+    //     name: user.name,
+    //     company: user.company,
+    //     seatNumber: user.seatNumber,
+    //     time: new Date().toLocaleTimeString(),
+    //   };
 
-      const alreadyChecked = checkIns.find((c) => c.id === user.id);
-      if (!alreadyChecked) {
-        setCheckIns((prev) => [...prev, newCheckIn]);
-      }
-    } else {
-      alert("User tidak ditemukan!");
-    }
+    //   const alreadyChecked = checkIns.find((c) => c.id === user.id);
+    //   if (!alreadyChecked) {
+    //     setCheckIns((prev) => [...prev, newCheckIn]);
+    //   }
+    // } else {
+    //   alert("User tidak ditemukan!");
+    // }
 
     e.target.value = "";
   };
