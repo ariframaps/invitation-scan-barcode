@@ -120,3 +120,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media print {
+  @page {
+    size: A6;
+    margin: 15mm;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #ticket,
+  #ticket * {
+    visibility: visible;
+  }
+  #ticket {
+    margin: 0 auto;
+    width: 320px;
+    padding: 20px;
+    border: 2px solid #333333;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    background: white;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #222;
+    border-radius: 8px;
+  }
+  #ticket h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 6px;
+    color: #007acc;
+  }
+  #ticket p {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+  #ticket strong {
+    color: #444;
+  }
+}
