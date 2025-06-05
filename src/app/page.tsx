@@ -85,7 +85,9 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="p-4 w-full max-w-md">
-        <h1 className="text-xl font-bold mb-4 text-center">Scan Barcode</h1>
+        <h1 className="text-xl font-bold mb-4 text-center">
+          Guest Registration
+        </h1>
 
         <input
           ref={inputRef}
@@ -96,22 +98,22 @@ export default function Home() {
         />
 
         <div className="mt-4">
-          <h2 className="text-lg font-semibold mb-2">Check-in List:</h2>
+          <h2 className="text-lg font-semibold mb-2">Check-in Information</h2>
           <ul className="space-y-3">
             {checkIns.map((c, i) => (
               <li key={i} className="p-3 border rounded bg-green-100">
                 <div>
                   <div>
-                    <strong>{c.name}</strong>
+                    <strong>Name : {c.name}</strong>
                   </div>
-                  <div>Perusahaan: {c.company}</div>
-                  <div>Kursi: {c.seatNumber}</div>
-                  <div>Waktu: {c.time}</div>
+                  <div>Company : {c.company}</div>
+                  <div>Seat No. : {c.seatNumber}</div>
+                  {/* <div>Waktu: {c.time}</div> */}
                 </div>
                 <button
                   onClick={() => handlePrint(c)}
                   className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
-                  Print Tiket
+                  Print
                 </button>
               </li>
             ))}
@@ -125,19 +127,19 @@ export default function Home() {
           id="ticket"
           className="hidden print:block p-6 border w-72 fixed top-10 left-1/2 -translate-x-1/2 bg-white"
           style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)" }}>
-          <h2 className="text-xl font-bold mb-4">Tiket Masuk</h2>
+          {/* <h2 className="text-xl font-bold mb-4">Tiket Masuk</h2> */}
           <p>
-            <strong>Nama:</strong> {selectedTicket.name}
+            <strong>Name :</strong> {selectedTicket.name}
           </p>
           <p>
-            <strong>Perusahaan:</strong> {selectedTicket.company}
+            <strong>Company :</strong> {selectedTicket.company}
           </p>
           <p>
-            <strong>Kursi:</strong> {selectedTicket.seatNumber}
+            <strong>Seat No. :</strong> {selectedTicket.seatNumber}
           </p>
-          <p>
+          {/* <p>
             <strong>Waktu Check-in:</strong> {selectedTicket.time}
-          </p>
+          </p> */}
         </div>
       )}
 
