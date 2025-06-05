@@ -83,12 +83,23 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <div className="p-4 w-full max-w-md">
-        <h1 className="text-xl font-bold mb-4 text-center">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
+      {/* HEADER */}
+      <header className="w-full">
+        <img
+          src="/MKO-BANNER-DIGITAL-FOR-WEB-QR.jpg"
+          alt="Event Banner"
+          className="w-full object-cover shadow-md rounded-b-none"
+        />
+      </header>
+
+      {/* KONTEN */}
+      <main className="flex flex-col items-center w-full py-8">
+        <h1 className="text-3xl md:text-4xl font-bold mb-10 sm:mb-20 text-center text-gray-800">
           Guest Registration
         </h1>
 
+        {/* INPUT HIDDEN */}
         <input
           ref={inputRef}
           type="text"
@@ -97,37 +108,46 @@ export default function Home() {
           autoFocus
         />
 
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold mb-2">Check-in Information</h2>
-          <ul className="space-y-3">
+        {/* LIST CHECK-IN */}
+        <div className="w-full max-w-[90vw] xs:max-w-[80vw] sm:max-w-3xl">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Check-in Information:
+          </h2>
+          <ul className="space-y-4">
             {checkIns.map((c, i) => (
-              <li key={i} className="p-3 border rounded bg-green-100">
-                <div>
-                  <div>
-                    <strong>Name : {c.name}</strong>
+              <li
+                key={i}
+                className="overflow-hidden bg-white border border-gray-300 rounded-lg shadow-sm flex justify-between items-stretch flex-wrap md:flex-nowrap">
+                <div className="flex-1 min-w-[60%] p-4">
+                  <div className="font-semibold text-gray-800">
+                    Name : {c.name}
                   </div>
-                  <div>Company : {c.company}</div>
-                  <div>Seat No. : {c.seatNumber}</div>
-                  {/* <div>Waktu: {c.time}</div> */}
+                  <div className="text-sm text-gray-600">
+                    Company : {c.company}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Seat No. : {c.seatNumber}
+                  </div>
+                  {/* <div className="text-sm text-gray-500">Waktu: {c.time}</div> */}
                 </div>
                 <button
                   onClick={() => handlePrint(c)}
-                  className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                  className="md:mt-0 ml-0 md:ml-4 px-8 py-1 text-sm bg-[#29A5DF] text-white rounded hover:bg-black">
                   Print
                 </button>
               </li>
             ))}
           </ul>
         </div>
-      </div>
+      </main>
 
-      {/* Tiket yang hanya muncul saat print */}
+      {/* TIKET SAAT PRINT */}
       {selectedTicket && (
         <div
           id="ticket"
           className="hidden print:block p-6 border w-72 fixed top-10 left-1/2 -translate-x-1/2 bg-white"
           style={{ boxShadow: "0 0 10px rgba(0,0,0,0.3)" }}>
-          {/* <h2 className="text-xl font-bold mb-4">Tiket Masuk</h2> */}
+          <h2 className="text-xl font-bold mb-4">Ticket</h2>
           <p>
             <strong>Name :</strong> {selectedTicket.name}
           </p>
@@ -137,33 +157,28 @@ export default function Home() {
           <p>
             <strong>Seat No. :</strong> {selectedTicket.seatNumber}
           </p>
-          {/* <p>
-            <strong>Waktu Check-in:</strong> {selectedTicket.time}
-          </p> */}
         </div>
       )}
 
+      {/* PRINT STYLES */}
       <style>{`
-        @media print {
-          @page {
-            size: A6; /* ukuran tiket kecil, sesuaikan */
-            margin: 10mm;
-          }
-          body * {
-            visibility: hidden;
-          }
-          #ticket, #ticket * {
-            visibility: visible;
-          }
-          #ticket {
-            // position: absolute;
-            // top: 0;
-            // left: 0;
-            margin: 0 auto;
-            width: 300px;
-          }
+      @media print {
+        @page {
+          size: A6;
+          margin: 10mm;
         }
-      `}</style>
+        body * {
+          visibility: hidden;
+        }
+        #ticket, #ticket * {
+          visibility: visible;
+        }
+        #ticket {
+          margin: 0 auto;
+          width: 300px;
+        }
+      }
+    `}</style>
     </div>
   );
 }
