@@ -114,7 +114,7 @@ export default function Home() {
         />
 
         {/* LIST CHECK-IN */}
-        <div className="w-full max-w-[90vw] xs:max-w-[80vw] sm:max-w-3xl h-[65vh] bg-red-50 overflow-scroll">
+        <div className="w-full max-w-[90vw] xs:max-w-[80vw] sm:max-w-3xl h-[65vh] overflow-y-scroll">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Check-in Information:
           </h2>
