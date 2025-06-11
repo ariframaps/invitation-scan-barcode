@@ -129,7 +129,6 @@ export default function Home() {
                     }`}>
                     <div className="flex-1 min-w-[60%] p-4">
                       <div className="font-semibold text-gray-800">
-                        checkin : {c.justCheckedIn}
                         Name : {c.name}
                       </div>
                       <div className="text-sm text-gray-600">
