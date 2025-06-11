@@ -165,7 +165,11 @@ export default function Home() {
             style={{ width: "80px", marginBottom: "10px" }}
           /> */}
 
-          <h2 className="text-xl font-bold mb-4">Ticket</h2>
+          <h2 className="text-xl font-bold mb-4">
+            AMA X MKO
+            <br />
+            <span className="text-lg">Executive Dialog Participants</span>
+          </h2>
           <p>
             <strong>Name :</strong> {selectedTicket.name}
           </p>
