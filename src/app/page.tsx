@@ -40,13 +40,31 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  let scanInput = "";
   let scanTimer: ReturnType<typeof setTimeout>;
+  let lastKeyTime = Date.now(); // buat catat waktu terakhir
 
-  const handleScan = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const scannedId = e.target.value.trim();
+  const handleScan = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const now = Date.now();
+    const diff = now - lastKeyTime;
+
+    // Kalau lebih dari 200ms, anggap itu scan baru
+    if (diff > 100) {
+      scanInput = "";
+    }
+
+    lastKeyTime = now; // update waktu terakhir
+
+    const newChar = e.target.value;
+    scanInput += newChar;
+    e.target.value = "";
+
     clearTimeout(scanTimer);
 
     scanTimer = setTimeout(() => {
+      const scannedId = scanInput.trim();
+      scanInput = "";
+
       const guestIndex = guests.findIndex((g) => g.id === scannedId);
 
       if (guestIndex !== -1) {
@@ -60,19 +78,15 @@ export default function Home() {
           };
 
           const newGuests = [...guests];
-
-          newGuests.splice(guestIndex, 1); // hapus dari posisi lama
-          console.log([updatedGuest, ...newGuests]);
-          setGuests([updatedGuest, ...newGuests]); // taruh di paling atas
+          newGuests.splice(guestIndex, 1);
+          setGuests([updatedGuest, ...newGuests]);
         } else {
           alert("Guest sudah check-in!");
         }
       } else {
         alert("Guest tidak ditemukan!");
       }
-
-      e.target.value = "";
-    }, 1500);
+    }, 1000);
   };
 
   const handlePrint = (guest: Guest) => {
@@ -109,7 +123,7 @@ export default function Home() {
           type="text"
           onChange={handleScan}
           disabled={loading}
-          className="opacity-1 absolute"
+          // className="opacity-1 absolute"
           autoFocus
         />
 
