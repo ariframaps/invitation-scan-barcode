@@ -123,7 +123,7 @@ export default function Home() {
           type="text"
           onChange={handleScan}
           disabled={loading}
-          // className="opacity-1 absolute"
+          className="opacity-1 absolute"
           autoFocus
         />
 
